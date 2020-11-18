@@ -1,0 +1,30 @@
+{
+  "name": "slack-photo-uploader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrmeyers99/slack-photo-uploader.git"
+  },
+  "author": "mrmeyers99",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrmeyers99/slack-photo-uploader/issues"
+  },
+  "homepage": "https://github.com/mrmeyers99/slack-photo-uploader/#readme",
+  "dependencies": {
+    "@slack/bolt": "^2.4.1",
+    "FormData": "^0.10.1",
+    "axios": "^0.21.0",
+    "db-migrate": "^0.11.11",
+    "db-migrate-mysql": "^2.1.1",
+    "downloadjs": "^1.4.7",
+    "form-data": "^3.0.0",
+    "mysql": "^2.18.1",
+    "request": "^2.88.2"
+  }
+}
