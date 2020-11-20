@@ -28,37 +28,38 @@ const albumId = process.env.GOOGLE_PHOTOS_ALBUM_ID;
 
   // Listens to incoming messages that contain "hello"
   app.event('reaction_added', async ({ event, client }) => {
-
-    try {
-      console.log(event);
-      const message = await client.conversations.history({
-        'channel': event.item.channel,
-        'latest': event.item.ts,
-        'limit': 1,
-        'inclusive': true
-      });
-
-      const start = async () => {
-        await asyncForEach(message.messages[0].files, async (file) => {
-          console.log(file);
-          console.log(token);
-          await downloadImage(file.url_private_download, file.id)
-            .then((res) => uploadMedia(file, accessToken))
-            .then((uploadToken) => createMediaItem(file, uploadToken, accessToken));
-          fs.unlinkSync(file.id)
+    if (event.reaction === 'up') {
+      try {
+        console.log(event);
+        const message = await client.conversations.history({
+          'channel': event.item.channel,
+          'latest': event.item.ts,
+          'limit': 1,
+          'inclusive': true
         });
 
-        await client.reactions.add({
-          "channel": event.item.channel,
-          "name": "heavy_check_mark",
-          "timestamp": event.item.ts
-        })
-        console.log('Done');
+        const start = async () => {
+          await asyncForEach(message.messages[0].files, async (file) => {
+            console.log(file);
+            console.log(token);
+            await downloadImage(file.url_private_download, file.id)
+              .then((res) => uploadMedia(file, accessToken))
+              .then((uploadToken) => createMediaItem(file, uploadToken, accessToken));
+            fs.unlinkSync(file.id)
+          });
+
+          await client.reactions.add({
+            "channel": event.item.channel,
+            "name": "heavy_check_mark",
+            "timestamp": event.item.ts
+          })
+          console.log('Done');
+        }
+        await start();
       }
-      await start();
-    }
-    catch (error) {
-      console.error(error);
+      catch (error) {
+        console.error(error);
+      }
     }
   });
 
